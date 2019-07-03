@@ -9,27 +9,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ro.utcn.sd.a3.entity.Teacher;
+import ro.utcn.sd.a3.entity.AppUser;
 import ro.utcn.sd.a3.exception.NotFoundException;
-import ro.utcn.sd.a3.repository.TeacherRepository;
+import ro.utcn.sd.a3.repository.AppUserRepository;
 
 import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
-public class TeacherUserDetailsService implements UserDetailsService {
-    private final TeacherRepository repository;
+public class AppUserDetailsService implements UserDetailsService {
+    private final AppUserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Teacher teacher = repository.findByName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Unknown teacher!"));
-        return new User(teacher.getName(), teacher.getPassword(),
+        AppUser appUser = repository.findByName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Unknown user!"));
+        return new User(appUser.getName(), appUser.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_TEACHER")));
     }
 
     @Transactional
-    public Teacher loadCurrentTeacher() {
+    public AppUser loadCurrentAppUser() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         return repository.findByName(name).orElseThrow(NotFoundException::new);
     }

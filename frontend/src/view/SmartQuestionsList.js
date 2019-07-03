@@ -24,7 +24,12 @@ export default class SmartQuestionsList extends Component {
         return (
             <QuestionsList 
                 onCreateQuestion={questionsListPresenter.onCreateQuestion}
-                questions={this.state.questions} />
+                questions={this.state.questions}
+                onFilterByTag={questionsListPresenter.onFilterByTag}
+                onFilterByTitle={questionsListPresenter.onFilterByTitle}
+                onChangeFilter={questionsListPresenter.onChangeFilter}
+                filterTag={this.state.filterTag}
+                />
         );
     }
 }

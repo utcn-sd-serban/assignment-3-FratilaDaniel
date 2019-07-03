@@ -32,7 +32,6 @@ export default class SmartCreateQuestion extends Component {
                 authorId={this.state.authorId}
                 title={this.state.title}
                 text={this.state.text}
-                date={this.state.date}
                 tags={this.state.tags} />
         );
     }

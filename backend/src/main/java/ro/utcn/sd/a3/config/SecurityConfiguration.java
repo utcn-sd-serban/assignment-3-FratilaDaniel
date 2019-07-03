@@ -10,12 +10,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ro.utcn.sd.a3.service.TeacherUserDetailsService;
+import ro.utcn.sd.a3.service.AppUserDetailsService;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final TeacherUserDetailsService userDetailsService;
+    private final AppUserDetailsService userDetailsService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {

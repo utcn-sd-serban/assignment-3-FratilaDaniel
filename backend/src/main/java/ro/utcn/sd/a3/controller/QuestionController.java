@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ro.utcn.sd.a3.dto.QuestionDTO;
+import ro.utcn.sd.a3.command.Cmd;
+import ro.utcn.sd.a3.dto.QuestionTagDTO;
 import ro.utcn.sd.a3.event.BaseEvent;
 import ro.utcn.sd.a3.service.QuestionService;
 
@@ -18,17 +19,18 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class QuestionController {
-    private final QuestionService questionService;
+
+    private final Cmd cmd;
     private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/questions")
-    public List<QuestionDTO> readAll() {
-        return questionService.listAll();
+    public List<QuestionTagDTO> readAll() {
+        return cmd.execute( "viewQuestions", null);
     }
 
     @PostMapping("/questions")
-    public QuestionDTO create(@RequestBody QuestionDTO dto) {
-        return questionService.create(dto);
+    public QuestionTagDTO create(@RequestBody QuestionTagDTO dto) {
+        return (QuestionTagDTO)cmd.execute("addQuestion", dto).get(0);
     }
 
     @EventListener(BaseEvent.class)

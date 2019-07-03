@@ -13,10 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(of = {"id", "name"})
-public class Teacher {
+public class AppUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 	private String password;
+
+	public AppUser(String name, String password){
+		this.name = name;
+		this.password = password;
+	}
 }

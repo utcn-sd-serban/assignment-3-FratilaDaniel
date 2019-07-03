@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateQuestion = ({ authorId, title, text, date, tags, onCreate, onChange }) => (
+const CreateQuestion = ({ authorId, title, text, tags, onCreate, onChange }) => (
     <div>
         <h2>Add Question</h2>
         <div>
@@ -15,10 +15,6 @@ const CreateQuestion = ({ authorId, title, text, date, tags, onCreate, onChange 
             <label>Text: </label>
             <input value={text} 
                 onChange={ e => onChange("text", e.target.value) } />
-            <br />
-            <label>Date: </label>
-            <input value={date} 
-                onChange={ e => onChange("date", e.target.value) } />
             <br />
             <label>Tags: </label>
             <input value={tags} 

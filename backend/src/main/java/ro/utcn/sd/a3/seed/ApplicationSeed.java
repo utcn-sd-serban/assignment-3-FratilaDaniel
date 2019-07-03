@@ -5,28 +5,28 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ro.utcn.sd.a3.entity.Grade;
 import ro.utcn.sd.a3.entity.Question;
-import ro.utcn.sd.a3.entity.Student;
-import ro.utcn.sd.a3.entity.Teacher;
-import ro.utcn.sd.a3.repository.GradeRepository;
+import ro.utcn.sd.a3.entity.QuestionTag;
+import ro.utcn.sd.a3.entity.Tag;
+import ro.utcn.sd.a3.entity.AppUser;
 import ro.utcn.sd.a3.repository.QuestionRepository;
-import ro.utcn.sd.a3.repository.StudentRepository;
-import ro.utcn.sd.a3.repository.TeacherRepository;
+import ro.utcn.sd.a3.repository.QuestionTagRepository;
+import ro.utcn.sd.a3.repository.TagRepository;
+import ro.utcn.sd.a3.repository.AppUserRepository;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Component
 @RequiredArgsConstructor
 public class ApplicationSeed implements CommandLineRunner {
-    private final TeacherRepository teacherRepository;
-    private final StudentRepository studentRepository;
-    private final GradeRepository gradeRepository;
+    private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
 
 
     private final QuestionRepository questionRepository;
+    private final TagRepository tagRepository;
+    private final QuestionTagRepository questionTagRepository;
+
     @Override
     @Transactional
     public void run(String... args) {
@@ -48,7 +48,7 @@ public class ApplicationSeed implements CommandLineRunner {
         Date date3 = c3.getTime();
 
 
-        List<Question> questions= Arrays.asList(
+        List<Question> questions = Arrays.asList(
                 new Question(1,
                         "Do dogs eat cats?",
                         "DummyText1",
@@ -65,31 +65,32 @@ public class ApplicationSeed implements CommandLineRunner {
         questionRepository.saveAll(questions);
 
 
-        Teacher serban = new Teacher(0, "serban", passwordEncoder.encode("password"));
-        teacherRepository.save(serban);
 
-        Student john = new Student(0, "John", "Doe", new LinkedList<>());
-        studentRepository.save(john);
-        Student jack = new Student(0, "Jack", "Black", new LinkedList<>());
-        studentRepository.save(jack);
-        Student jane = new Student(0, "Jane", "White", new LinkedList<>());
-        studentRepository.save(jane);
+        List<Tag> tags = Arrays.asList(new Tag("dogs"), new Tag("cats"), new Tag("eat"), new Tag("flight"));
+        tagRepository.saveAll(tags);
 
-        List<Grade> grades = Arrays.asList(
-                new Grade(0, 5, LocalDate.now(), serban),
-                new Grade(0, 6, LocalDate.now(), serban),
-                new Grade(0, 7, LocalDate.now(), serban)
-        );
-        gradeRepository.saveAll(grades);
 
-        john.setGrades(grades);
+
+        List<QuestionTag> questionTags = Arrays.asList(
+                new QuestionTag(1,1),
+                new QuestionTag(1,2),
+                new QuestionTag(2,4),
+                new QuestionTag(3,2));
+        questionTagRepository.saveAll(questionTags);
+
+
+
+        AppUser serban = new AppUser("serban", passwordEncoder.encode("password"));
+        AppUser dani = new AppUser("dani", passwordEncoder.encode("pass"));
+
+        appUserRepository.save(serban);
+        appUserRepository.save(dani);
+
     }
 
     @Transactional
     public void clear() {
-        gradeRepository.deleteAll();
-        studentRepository.deleteAll();
-        teacherRepository.deleteAll();
+        appUserRepository.deleteAll();
         questionRepository.deleteAll();
     }
 }

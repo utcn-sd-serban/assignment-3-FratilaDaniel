@@ -1,6 +1,6 @@
 import React from "react";
 
-const QuestionsList = ({ questions, title, onCreateQuestion }) => (
+const QuestionsList = ({ questions, title, onCreateQuestion, onFilterByTag, onFilterByTitle, onChangeFilter, filterTag  }) => (
     <div>
         <h2>{ title || "Questions" }</h2>
         <table border="1">
@@ -20,7 +20,7 @@ const QuestionsList = ({ questions, title, onCreateQuestion }) => (
                             <td>{question.authorId}</td>
                             <td>{question.title}</td>
                             <td>{question.text}</td>
-                            <td>{question.date}</td>
+                            <td>{question.creationDate}</td>
                             <td>{question.tags}</td>
                         </tr>
                     ))
@@ -28,6 +28,15 @@ const QuestionsList = ({ questions, title, onCreateQuestion }) => (
             </tbody>
         </table>
         <button onClick={onCreateQuestion} data-cy="add">Add new Question</button>
+        <br/>
+        <label>Filter by keyword</label>
+        &emsp;
+            <input value={filterTag} 
+                onChange={ e => onChangeFilter(e.target.value) } />
+            <br />
+        <button class="btn btn-primary" onClick={onFilterByTag}>Filter by tag</button>
+        <button class="btn btn-primary" onClick={onFilterByTitle}>Filter by title</button>
+
     </div>
 );
 

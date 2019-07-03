@@ -3,16 +3,16 @@ package ro.utcn.sd.a3.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ro.utcn.sd.a3.entity.Teacher;
-import ro.utcn.sd.a3.service.TeacherUserDetailsService;
+import ro.utcn.sd.a3.entity.AppUser;
+import ro.utcn.sd.a3.service.AppUserDetailsService;
 
 @RestController
 @RequiredArgsConstructor
-public class TeacherController {
-    private final TeacherUserDetailsService service;
+public class AppUserController {
+    private final AppUserDetailsService service;
 
     @GetMapping("/me")
-    public Teacher readCurrent() {
-        return service.loadCurrentTeacher();
+    public AppUser readCurrent() {
+        return service.loadCurrentAppUser();
     }
 }
