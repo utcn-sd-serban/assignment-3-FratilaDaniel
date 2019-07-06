@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "4735576f-9601-4c99-8042-c00b2cb2ec9b",
+		"name": "questionsTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/questions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d22a183e-5f39-4030-8662-4d8c093b3aa2",
+						"exec": [
+							"pm.test(\"Response status is OK\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Nr questions == 3\", function(){\r",
+							"   var questions = pm.response.json();\r",
+							"    var result = 0;\r",
+							"     for(var i = 0; i < questions.length; i++)\r",
+							"   {\r",
+							"       result++;\r",
+							"   }\r",
+							"pm.expect(result).to.be.equal(3);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Exist two questions about cats\", function(){\r",
+							"    var questions = pm.response.json();\r",
+							"    var result = 0;\r",
+							"    for(var i = 0; i < questions.length; i++)\r",
+							"    {\r",
+							"        if(questions[i].title.includes(\"cats\"))\r",
+							"        {\r",
+							"            result++;\r",
+							"        }\r",
+							"    }\r",
+							"    pm.expect(result).to.be.equal(2);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "serban",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/questions",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"questions"
+					]
+				},
+				"description": "Postman tests"
+			},
+			"response": []
+		}
+	]
+}
